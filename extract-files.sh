@@ -75,6 +75,11 @@ function blob_fixup() {
 		sed -i -e 's|/system/bin/linker64|/sbin/linker64\x0\x0\x0\x0\x0\x0|g' "${2}"
 		;;
 
+	# Use a hacked up libbase for IMS
+	vendor/lib64/lib-uceservice.so | vendor/bin/imsrcsd)
+		patchelf --replace-needed "libbase.so" "libbase-hax.so" "${2}"
+		;;
+
 	esac
 }
 
